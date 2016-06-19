@@ -7,6 +7,10 @@ exports.ClassHam = 'Ham';
 
 exports.Load = function(callback){
     natural.BayesClassifier.load('../classifier.json', null, function(err, c) {
+        if (err){
+            console.log(err);
+            return;
+        }
         classifier = c;
         callback();
     });
