@@ -3,25 +3,26 @@ var classify = require('./ClassifyCron.js');
 
 var searchQuery = '#indiedev OR #gamedev -RT';
 var Tweets = [];
-var blockedIDs;
+var blockedIDs = [];
 
 function GetBlockedIDs(callback) {
-    console.log('getting blockedIDs');
     twitter.TwitClient.get('blocks/list', {
         include_entities: true,
         skip_status: true,
     }, function(error, reply) {
         if (error) return console.log(error);
-        blockedIDs = reply;
+        console.log('reply length ' + reply.users.length);
+        for (var i = 0; i < reply.users.length; i++) {
+            blockedIDs.push(reply.users[i]);
+        }
         callback();
     });
 }
 
 function IsBlockedID(id) {
-    console.log('checking: ' + id);
+    console.log('checking if userid is blocked: ' + id);
     for (var i = 0; i < blockedIDs.length; i++) {
-        if (blockedIDs.id_str == id) {
-            console.log('true');
+        if (blockedIDs[i].id_str == id) {
             return true;
         }
     }
