@@ -98,7 +98,7 @@ function GetRandomTweet(callback) {
 function Retweet() {
     GetRandomTweet(function(RandomTweet) {
         if (RandomTweet != null) {
-            if (!IsBlockedID(RandomTweet.id_str)) {
+            if (!IsBlockedID(RandomTweet.user.id_str)) {
                 PostRetweet(RandomTweet.id_str);
             } else {
                 Retweet();
